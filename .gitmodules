@@ -1,0 +1,12 @@
+[submodule "islr-classification"]
+	path = islr-classification
+	url = https://github.com/naijopkr/islr-classification.git
+[submodule "islr-conceptual"]
+	path = islr-conceptual
+	url = https://github.com/naijopkr/islr-conceptual.git
+[submodule "islr-intro"]
+	path = islr-intro
+	url = https://github.com/naijopkr/islr-intro.git
+[submodule "islr-linear-regression"]
+	path = islr-linear-regression
+	url = https://github.com/naijopkr/islr-linear-regression.git
