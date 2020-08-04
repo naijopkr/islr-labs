@@ -1,0 +1,421 @@
+---
+title: "Chapter 4: Classification"
+author: "Conceptual exercises"
+date: "July 14, 2020"
+output:
+  html_document:
+    keep_md: no
+---
+
+## Exercise 1
+
+Equation 4.2:
+
+$p(X) = \frac{e^{\beta_0+\beta_1X}}{1 + e^{\beta_0+\beta_1X}}$
+
+Equation 4.3
+
+$\frac{p(X)}{1 - p(X)} = e^{\beta_0 + \beta_1X}$
+
+Using $Z = e^{\beta_0 + \beta_1X}$
+
+**Step 1** Multiply both sides by $1 + Z$:
+
+$p(X) * (1 + Z) = \frac{Z * (1 + Z)}{1+ Z}$
+
+$p(X) + Zp(X) = Z$
+
+**Step 2** Divide both sides by $Z$:
+
+$\frac{p(X)}{Z} + p(X) = 1$
+
+**Step 3** Rearrange variables:
+
+$\frac{p(X)}{Z} = 1 - p(X)$
+
+$p(X) = (1 - p(X))Z$
+
+$\frac{p(X)}{1 - p(X)} = Z$
+
+$\frac{p(X)}{1 - p(X)} = e^{\beta_0 + \beta_1X}$
+
+
+## Exercise 2
+
+Equation 4.12
+
+$p_k(x) = \frac{
+    \pi_k\frac{
+      1
+    }{
+      \sqrt{2\pi} \cdot \sigma
+    }\exp(-\frac{
+      1
+    }{
+      2\sigma^2
+    }(x - \mu_k)^2)
+  }{
+    \sum_{l=1}^{K}\pi_l\frac{
+      1
+    }{
+      \sqrt{2\pi} \cdot \sigma
+    }\exp(-\frac{
+      1
+    }{
+      2\sigma^2
+    }(x - \mu_l)^2)
+  }$
+
+Equation 4.13:
+
+$\delta_k(x) = x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2} + \log{\pi_k}$
+
+First let's simplify this by discriminating the piece of the equation
+that remains constant acrros $k$
+
+$C = \frac{
+  \frac{
+    1
+  }{
+    \sqrt{2\pi} \cdot \sigma
+  }\exp(-\frac{
+    1
+  }{
+    2\sigma^2
+  }x^2)
+}{
+  \sum_{l=1}^K\pi_l\frac{
+    1
+  }{
+    \sqrt{2\pi} \cdot \sigma
+  }\exp(-\frac{
+    1
+  }{
+    2\sigma^2
+  }(x - \mu_l)^2)
+}$
+
+Replacing $C$ on equation 4.12, we have:
+
+$p_k(x) = C \cdot \pi_k \cdot \exp(\frac{
+  x\mu_k
+}{
+  \sigma^2
+} - \frac{
+  \mu_k^2
+}{
+  2\sigma^2
+})$
+
+Now, we apply $\log$ on both sides of the equation
+
+$\log{p_k(x)} = \log{C} + \log{\pi_k} + x \cdot \frac{
+  \mu_k
+}{
+  \sigma^2
+} - \frac{
+  \mu_k^2
+}{
+  2\sigma^2
+}$
+
+And we can see how the discriminant function determines
+wich class will be assigned.
+
+
+## Exercise 3
+
+Assuming that in the equation 4.12, $\sigma$ varies with $k$:
+
+$C' = \frac{
+  \frac{
+    1
+  }{
+    \sqrt{2\pi}
+  }
+}{
+  \sum_{l=1}^K\pi_l\frac{
+    1
+  }{
+    \sqrt{2\pi} \cdot \sigma
+  }\exp(-\frac{
+    1
+  }{
+    2\sigma^2
+  }(x - \mu_l)^2)
+}$
+
+Replacing on the original equation:
+
+$p_k(x) = \frac{
+  \pi_k
+}{
+  \sigma_k
+} \cdot C' \cdot \exp(
+  -\frac{
+    1
+  }{
+    2\sigma_k^2
+  }(x - \mu_k)^2
+)$
+
+Applying $\log$ to the equation:
+
+$\log{p_k(x)} = \log{C'} + \log{\pi_k} - log{\sigma_k} -\frac{
+    1
+  }{
+    2\sigma_k^2
+}(x - \mu_k)^2$
+
+Solving the expression $(x - \mu_k)^2$:
+
+$\log{p_k(x)} = \log{C'} + \log{\pi_k} - log{\sigma_k} -\frac{
+    1
+  }{
+    2\sigma_k^2
+}(x^2 - 2x\mu_k + \mu_k^2)$
+
+We can see by the term $x^2 - 2x\mu_k + \mu_k^2$ that the
+classifier is not linear.
+
+
+## Exercise 4
+
+> Part a)
+
+$p = 1$
+
+$\frac{
+  lim_1 - lim_0
+}{
+  max - min
+} = \frac{
+  0.65 - 0.55
+}{
+  1 - 0
+} = \frac{
+  0.1
+}{
+  1
+} = 10\%$
+
+> Part b)
+
+$p = 2$
+
+$0.1^2 = 0.01 = 1\%$
+
+> Part c)
+
+$p = 100$
+
+$0.1^{100} = 10^{-100} = 10^{-98}\%$
+
+> Part d)
+
+As we can see in parts a to c, when p is increased,
+the available observations will decrease exponentially.
+So, with large p we can expect for the KNN model to
+fit poorly as it has few observations to predict the
+class of the target observation.
+
+> Part e)
+
+For p = 1, we need a hypercube with the length of 10% of the length of observations.
+
+For p = 2, we need a hybercube with the length of $\sqrt{0.1} \approxeq 0.3162$,
+almost one third of the range of each individual feature
+
+For p = 100, we need a hypercube with the length of $0.1^{\frac{1}{100}} \approxeq 0.9772$,
+almost the entire range of each individual feature.
+
+## Exercise 5
+
+> Part a)
+
+If the Bayes decision boundary is linear we expect LDA
+to perform better on the test set. On the training set
+QDA can perform better if it overfits the model.
+
+> Part b)
+
+If the Bayes decision boundary is non-linear we expect
+QDA to perform better on both training and test sets
+
+> Part c)
+
+LDA tends to perform better than QDA if there are few training
+observations and so reducing the variance is crucial. In contrast,
+QDA is recommended if the training set is very large. So we can
+expect the accuracy of QDA relative to LDA to increase as the
+sample size increases.
+
+> Part d)
+
+False. The QDA is more likely to overfit the data. We may see
+a better error rate for the training set, although this will not
+be reflected in the test set.
+
+
+## Exercise 6
+
+| p | Coef | value |
+|---|------|-------|
+| X_1 | $\hat{\beta_1}$ | 0.05 |
+| X_2 | $\hat{\beta_2}$ | 1 |
+
+Logistic function:
+
+$p(x) = \frac{
+  e^{-6 + 0.05X_1 + X_2}
+}{
+  1 + e^{-6 + 0.05X_1 + X_2}
+}$
+
+> Part a)
+
+$X_1 = 40$
+$X_2 = 3.5$
+
+$p(x) = \frac{
+  e^{-6 + 0.05 * 40 + 3.5}
+}{
+  1 + e^{-6 + 0.05 * 40 + 3.5}
+} = 0.3775$
+
+$S = 37.75%$
+
+> Part b)
+
+$p(x) = 0.5$
+
+We will use:
+
+$\log{\frac{
+  p(x)
+}{
+  1 - p(x)
+}} = \beta_0 + \beta_1X_1 + \beta_2X_2$
+
+$\log{\frac{
+  0.5
+}{
+  0.5
+}} = -6 + 0.05X_1 + 3.5$
+
+$2.5 = 0.05X_1$
+
+$X_1 = \frac{2.5}{0.05} = 50$
+
+$S = 50 hours$
+
+
+## Exercise 7
+
+Density function:
+
+$f(x) = \frac{
+  1
+}{
+  \sqrt{2\pi}\sigma
+}e^{-(x-\mu)^2/2\sigma^2}$
+
+For $k = yes$:
+
+$\frac{
+  \pi_{yes}
+}{
+  \sqrt{2\pi}\sigma
+} = 0.8$
+
+$\sigma^2 = 36$
+
+$\mu_k = \mu_{yes} = 10$
+
+$x = 4$
+
+So, for constant variance:
+
+$p_k(x) = \frac{
+    \pi_k\frac{
+      1
+    }{
+      \sqrt{2\pi} \cdot \sigma
+    }\exp(-\frac{
+      1
+    }{
+      2\sigma^2
+    }(x - \mu_k)^2)
+  }{
+    \sum_{l=1}^{K}\pi_l\frac{
+      1
+    }{
+      \sqrt{2\pi} \cdot \sigma
+    }\exp(-\frac{
+      1
+    }{
+      2\sigma^2
+    }(x - \mu_l)^2)
+}$
+
+Solving density function for $yes$:
+
+$0.8\exp(\frac{
+  -(x - \mu_{yes})^2
+}{
+  2\sigma^2
+}) = 0.8\exp(\frac{
+  -(4 - 10)^2
+}{
+  2 * 36
+}) = 0.8\exp(-36/72) = 0.4852245$
+
+And for $No$:
+
+$(1-0.8)\exp(-\frac{
+  -(x - \mu_{no})^2
+}{
+  2\sigma^2
+}) = (1-0.8)\exp(\frac{
+  -(4 - 0)^2
+}{
+  2 * 36
+}) = 0.2\exp(-16/72) = 0.1601475$
+
+
+Applying that on $p_{yes}(x)$:
+
+$p_{yes}(x) = 0.4852245 / (0.4852245 + 0.1601475) = 0.7518524$
+
+Probability is 75.18%
+
+## Exercise 8
+
+Based on the results one might think that KNN is a better choice,
+but there's not enough information to assure that. Due to KNN tendency to overfit,
+it can have a 0% error rate on training data and 30% on the test data. Although,
+the high error rate on logistic regression model, suggests that the error boundary
+is not linear, making the KNN a better choice.
+
+## Exercise 9
+
+> Part a)
+
+$0.37 = p_{default} / (1 - p_{default})$
+
+$0.37 - 0.37p_{default} = p_{default}$
+
+$0.37 = p_{default} + 0.37p_{default}$
+
+$1.37p_{default} = 0.37$
+
+$p_{default} = 0.37 / 1.37 = 0.27$
+
+27% of people will default.
+
+
+> Part b)
+
+${odd} = 0.16 / (1 - 0.16) = 0.19$
+
+Odds of defaulting is 0.19
