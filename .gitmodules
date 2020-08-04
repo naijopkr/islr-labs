@@ -1,6 +1,3 @@
-[submodule "islr-classification"]
-	path = islr-classification
-	url = https://github.com/naijopkr/islr-classification.git
 [submodule "islr-conceptual"]
 	path = islr-conceptual
 	url = https://github.com/naijopkr/islr-conceptual.git
