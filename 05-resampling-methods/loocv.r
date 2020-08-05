@@ -52,4 +52,9 @@ estimated test MSE between the
 linear and the quadratic fits,
 but then no clear improvement from
 using higher-order polynomials
+
+Time of computation:
+real    0m4.667s
+user    0m4.640s
+sys     0m0.028s
 "
